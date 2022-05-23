@@ -2,8 +2,6 @@
 #![allow(dead_code)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
-pub extern crate tokio;
-
 mod errors;
 mod layer;
 mod manager;
@@ -16,6 +14,7 @@ pub use manager::{ODBCConnectionManager, ENV};
 pub use pool::ODBCConnection;
 pub(crate) use pool::SharedPool;
 pub use service::OdbcManagerService;
+pub use tokio;
 
 /// Block non async functions so it can run within async.
 ///
