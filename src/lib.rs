@@ -14,7 +14,7 @@ pub use manager::{ODBCConnectionManager, ENV};
 pub use pool::ODBCConnection;
 pub(crate) use pool::SharedPool;
 pub use service::OdbcManagerService;
-pub use tokio;
+pub use tokio::{ self, task };
 
 /// Block non async functions so it can run within async.
 ///
