@@ -24,7 +24,7 @@ impl ODBCConnectionManager {
         }
     }
 
-    pub async fn aquire(&'static self) -> ODBCConnection {
+    pub async fn aquire(&self) -> ODBCConnection {
         self.shared.aquire().await.unwrap()
     }
 }

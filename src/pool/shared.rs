@@ -21,18 +21,20 @@ impl SharedPool {
         Arc::new(pool)
     }
 
-    pub(crate) async fn aquire(self: &'static Arc<Self>) -> Result<ODBCConnection, OdbcError> {
+    pub(crate) async fn aquire(self: &Arc<Self>) -> Result<ODBCConnection, OdbcError> {
+        let manager = self.clone();
+
         task::spawn_blocking(move || {
-            let pool = self
+            let pool = manager
                 .pool
                 .lock()
                 .map_err(|p| OdbcError::LockError { msg: p.to_string() })?;
 
             if let Some(connection) = pool.pop() {
-                return Ok(ODBCConnection::new(Arc::clone(self), connection));
+                return Ok(ODBCConnection::new(Arc::clone(&manager), connection));
             }
 
-            let conn_str = self
+            let conn_str = manager
                 .connection_string
                 .read()
                 .map_err(|p| OdbcError::LockError { msg: p.to_string() })?;
@@ -47,7 +49,7 @@ impl SharedPool {
             // we will attempt to bypass this by handling the pool ourselves.
             let connection = unsafe { conn.promote_to_send() };
 
-            Ok(ODBCConnection::new(Arc::clone(self), connection))
+            Ok(ODBCConnection::new(Arc::clone(&manager), connection))
         })
         .await?
     }
