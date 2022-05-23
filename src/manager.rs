@@ -25,7 +25,8 @@ impl ODBCConnectionManager {
     }
 
     pub async fn aquire(&self) -> ODBCConnection {
-        self.shared.aquire().await.unwrap()
+        let shared = Arc::clone(&self.shared);
+        shared.aquire().await.unwrap()
     }
 }
 
