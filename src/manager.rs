@@ -1,4 +1,7 @@
-use crate::pool::{ODBCConnection, SharedPool};
+use crate::{
+    pool::{ODBCConnection, SharedPool},
+    OdbcError,
+};
 use async_trait::async_trait;
 use axum_core::extract::{FromRequest, RequestParts};
 use http::{self, StatusCode};
@@ -13,20 +16,37 @@ pub struct ODBCConnectionManager {
 }
 
 lazy_static! {
-    pub static ref ENV: Environment = Environment::new().unwrap();
+    pub(crate) static ref ENV: Environment = Environment::new().unwrap();
 }
 
 impl ODBCConnectionManager {
-    /// Creates a new `ODBCConnectionManager`.
+    /// Constructs a ODBCConnectionManager.
+    ///
+    /// # Examples
+    /// ```rust no_run
+    /// use axum_odbc::{OdbcManagerLayer, ODBCConnectionManager};
+    ///
+    /// let odbc_manager = ODBCConnectionManager::new("DSN=PostgreSQL", 5);
+    /// ```
+    ///
     pub fn new<S: Into<String>>(connection_string: S, limit: u32) -> ODBCConnectionManager {
         ODBCConnectionManager {
             shared: SharedPool::new_arc(connection_string.into(), limit),
         }
     }
 
-    pub async fn aquire(&self) -> ODBCConnection {
+    /// Aquires an ODBCConnection.
+    ///
+    /// # Examples
+    /// ```rust no_run
+    /// use axum_odbc::{OdbcManagerLayer, ODBCConnectionManager};
+    ///
+    /// let odbc_manager = odbc_manager.aquire().await.unwrap();
+    /// ```
+    ///
+    pub async fn aquire(&self) -> Result<ODBCConnection, OdbcError> {
         let shared = Arc::clone(&self.shared);
-        shared.aquire().await.unwrap()
+        shared.aquire().await
     }
 }
 

@@ -8,15 +8,17 @@ mod manager;
 mod pool;
 mod service;
 
+pub(crate) use manager::ENV;
+pub(crate) use pool::SharedPool;
+pub(crate) use service::OdbcManagerService;
+
 pub use errors::OdbcError;
 pub use layer::OdbcManagerLayer;
-pub use manager::{ODBCConnectionManager, ENV};
+pub use manager::ODBCConnectionManager;
 pub use pool::ODBCConnection;
-pub(crate) use pool::SharedPool;
-pub use service::OdbcManagerService;
-pub use tokio::{ self, task };
+pub use tokio::{self, task};
 
-/// Block non async functions so it can run within async.
+/// Block non async closure or functions so it can run within async.
 ///
 /// # Examples
 /// ```rust no_run
