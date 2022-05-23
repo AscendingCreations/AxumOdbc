@@ -22,7 +22,7 @@ impl SharedPool {
     }
 
     pub(crate) async fn aquire(self: &Arc<Self>) -> Result<ODBCConnection, OdbcError> {
-        let manager = self.clone();
+        let manager = Arc::clone(self);
 
         task::spawn_blocking(move || {
             let pool = manager
