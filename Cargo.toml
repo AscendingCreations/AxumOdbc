@@ -1,0 +1,39 @@
+[package]
+name = "axum_odbc"
+version = "0.1.0"
+authors = ["Andrew Wheeler <genusistimelord@gmail.com>"]
+description = "Library to Provide an ODBC-Api layer."
+edition = "2021"
+license = "MIT"
+readme = "README.md"
+documentation = "https://docs.rs/axum_odbc"
+keywords = ["Axum", "Tower", "odbc", "odbc-api"]
+repository = "https://github.com/AscendingCreations/AxumOdbc"
+
+[features]
+iodbc = ["odbc-api/iodbc"]
+
+[dependencies]
+axum-core = "0.2.4"
+serde = "1.0.137"
+serde_json = "1.0.81"
+tokio = { version = "1.18.2", features = ["full"] }
+async-trait = "0.1.53"
+tracing = "0.1.34"
+thiserror = "1.0.31"
+http-body = "0.4.4"
+http = "0.2.7"
+tower-layer = "0.3.1"
+tower-service = "0.3.1"
+futures = "0.3.21"
+bytes = "1.1.0"
+odbc-api = "0.40.2"
+lazy_static = "1.4"
+crossbeam-queue = "0.3.5"
+
+[dev-dependencies]
+anyhow = "1.0.57"
+axum = "0.5.6"
+
+[package.metadata.docs.rs]
+features = ["postgres", "rustls"]
