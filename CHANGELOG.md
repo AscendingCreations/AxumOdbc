@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## 0.2.0 (14. June, 2022)
 ### Changed
+- updated odbc-api to 0.44.2.
 - removed unwrap() and return Result for require.
 
 ## 0.1.0 (23. May, 2022)
