@@ -35,10 +35,9 @@ impl Drop for ODBCConnection {
 
             if pool.len() < pool.capacity() {
                 // pool has space lets insert it back into the Pool
-                match pool.push(connection) {
-                    Ok(_) => {}
-                    Err(_) => panic!("Queue was maxed out"),
-                };
+                if pool.push(connection).is_err() {
+                    panic!("Queue was maxed out");
+                }
             }
         }
     }
