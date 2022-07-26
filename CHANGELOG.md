@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## 0.3.0 (26. July, 2022)
 ### Fixed
+- button links not being correct.
+
+## 0.3.0 (26. July, 2022)
+### Fixed
 - Documentation not building.
 
 ### Changed
