@@ -2,7 +2,7 @@
 
 Library to Provide an ODBC-Api layer.
 
-[![https://crates.io/crates/axum_axum_odbc](https://img.shields.io/badge/crates.io-v0.3.0-blue)](https://crates.io/crates/axum_odbc)
+[![https://crates.io/crates/axum_axum_odbc](https://img.shields.io/crates/v/axum_axum_odbc?style=plastic)](https://crates.io/crates/axum_axum_odbc)
 [![Docs](https://docs.rs/axum_axum_odbc/badge.svg)](https://docs.rs/axum_odbc)
 
 ## Help
