@@ -2,7 +2,7 @@
 
 Library to Provide an ODBC-Api layer.
 
-[![https://crates.io/crates/axum_axum_odbc](https://img.shields.io/badge/crates.io-v0.2.0-blue)](https://crates.io/crates/axum_odbc)
+[![https://crates.io/crates/axum_axum_odbc](https://img.shields.io/badge/crates.io-v0.2.1-blue)](https://crates.io/crates/axum_odbc)
 [![Docs](https://docs.rs/axum_axum_odbc/badge.svg)](https://docs.rs/axum_odbc)
 
 ## Install
@@ -14,7 +14,7 @@ Axum ODBC uses [`tokio`] runtime.
 ```toml
 # Cargo.toml
 [dependencies]
-axum_odbc = "0.2.0"
+axum_odbc = "0.2.1"
 ```
 
 #### Cargo Feature Flags

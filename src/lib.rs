@@ -1,6 +1,5 @@
 #![doc = include_str!("../README.md")]
 #![allow(dead_code)]
-#![cfg_attr(docsrs, feature(doc_cfg))]
 
 mod errors;
 mod layer;

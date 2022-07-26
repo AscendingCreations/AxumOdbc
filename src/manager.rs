@@ -22,6 +22,9 @@ lazy_static! {
 impl ODBCConnectionManager {
     /// Constructs a ODBCConnectionManager.
     ///
+    /// limit is the max size of how many connections we will allow to exist within the pool.
+    /// All other connections will get dropped after use if the pool is full.
+    ///
     /// # Examples
     /// ```rust no_run
     /// use axum_odbc::{OdbcManagerLayer, ODBCConnectionManager};
