@@ -6,9 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Unreleased
 
-## 0.2.1 (26. July, 2022)
+## 0.3.0 (26. July, 2022)
 ### Fixed
 - Documentation not building.
+
+### Changed
+- updated dependencies
+
+### Added
+- Direct link to odbc-api so you dont need to import it yourself.
 
 ## 0.2.0 (14. June, 2022)
 ### Changed

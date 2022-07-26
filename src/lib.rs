@@ -17,6 +17,8 @@ pub use manager::ODBCConnectionManager;
 pub use pool::ODBCConnection;
 pub use tokio::{self, task};
 
+pub use odbc_api as odbc;
+
 /// Block non async closure or functions so it can run within async.
 ///
 /// # Examples

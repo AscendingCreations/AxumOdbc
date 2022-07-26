@@ -2,8 +2,12 @@
 
 Library to Provide an ODBC-Api layer.
 
-[![https://crates.io/crates/axum_axum_odbc](https://img.shields.io/badge/crates.io-v0.2.1-blue)](https://crates.io/crates/axum_odbc)
+[![https://crates.io/crates/axum_axum_odbc](https://img.shields.io/badge/crates.io-v0.3.0-blue)](https://crates.io/crates/axum_odbc)
 [![Docs](https://docs.rs/axum_axum_odbc/badge.svg)](https://docs.rs/axum_odbc)
+
+## Help
+
+If you need help with this library or have suggestions please go to our [Discord Group](https://discord.gg/xKkm7UhM36)
 
 ## Install
 
@@ -14,7 +18,7 @@ Axum ODBC uses [`tokio`] runtime.
 ```toml
 # Cargo.toml
 [dependencies]
-axum_odbc = "0.2.1"
+axum_odbc = "0.3.0"
 ```
 
 #### Cargo Feature Flags
@@ -56,7 +60,3 @@ async fn drop_table(manager: ODBCConnectionManager) -> String {
     "compeleted".to_string()
 }
 ```
-
-# Help
-
-If you need help with this library or have suggestions please go to our [Discord Group](https://discord.gg/xKkm7UhM36)
