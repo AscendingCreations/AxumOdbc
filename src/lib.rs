@@ -26,11 +26,7 @@ pub use odbc_api as odbc;
 /// ```
 ///
 #[macro_export]
-#[deprecated(
-    since = "0.4.0",
-    note = "please use `odbc::Connection::execute_polling` instead. 
-        See: https://docs.rs/odbc-api/latest/odbc_api/struct.Connection.html#method.execute_polling"
-)]
+
 macro_rules! blocking {
     ($($expr:tt)*) => {
         $crate::tokio::task::spawn_blocking(move || { $($expr)* })
