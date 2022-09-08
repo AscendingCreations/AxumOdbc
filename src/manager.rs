@@ -3,12 +3,11 @@ use crate::{
     OdbcError,
 };
 use async_trait::async_trait;
-use axum_core::extract::{FromRequest, RequestParts};
-use http::{self, StatusCode};
+use axum_core::extract::{FromRef, FromRequestParts};
+use http::request::Parts;
 use lazy_static::lazy_static;
 use odbc_api::Environment;
-use std::fmt;
-use std::sync::Arc;
+use std::{convert::Infallible, fmt, sync::Arc};
 
 #[derive(Clone)]
 pub struct ODBCConnectionManager {
@@ -54,20 +53,15 @@ impl ODBCConnectionManager {
 }
 
 #[async_trait]
-impl<B> FromRequest<B> for ODBCConnectionManager
+impl<S> FromRequestParts<S> for ODBCConnectionManager
 where
-    B: Send,
+    S: Send + Sync,
+    ODBCConnectionManager: FromRef<S>,
 {
-    type Rejection = (http::StatusCode, &'static str);
+    type Rejection = Infallible;
 
-    async fn from_request(req: &mut RequestParts<B>) -> Result<Self, Self::Rejection> {
-        req.extensions()
-            .get::<ODBCConnectionManager>()
-            .cloned()
-            .ok_or((
-                StatusCode::INTERNAL_SERVER_ERROR,
-                "Can't extract ODBCConnectionManager. Is `ODBCManagerLayer` enabled?",
-            ))
+    async fn from_request_parts(_parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
+        Ok(ODBCConnectionManager::from_ref(state))
     }
 }
 
