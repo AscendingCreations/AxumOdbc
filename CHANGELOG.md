@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Unreleased
+### Changed
+- Removed Service
+- Removed Layer
+- Removed uneeded Depenencies
+- Depreciated the block macro in regards to newest ODBC change adding Async execute_polling
+- Removed FromRequest
+- Updated Readme to use Axum 0.6 State
+- Updated to Axum 0.6
+
+### Added
+- FromRequestParts for ODBCConnectionManager
 
 ## 0.3.1 (26. July, 2022)
 ### Fixed
