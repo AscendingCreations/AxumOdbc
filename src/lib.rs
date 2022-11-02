@@ -2,17 +2,13 @@
 #![allow(dead_code)]
 
 mod errors;
-mod layer;
 mod manager;
 mod pool;
-mod service;
 
 pub(crate) use manager::ENV;
 pub(crate) use pool::SharedPool;
-pub(crate) use service::OdbcManagerService;
 
 pub use errors::OdbcError;
-pub use layer::OdbcManagerLayer;
 pub use manager::ODBCConnectionManager;
 pub use pool::ODBCConnection;
 pub use tokio::{self, task};
@@ -30,6 +26,7 @@ pub use odbc_api as odbc;
 /// ```
 ///
 #[macro_export]
+
 macro_rules! blocking {
     ($($expr:tt)*) => {
         $crate::tokio::task::spawn_blocking(move || { $($expr)* })

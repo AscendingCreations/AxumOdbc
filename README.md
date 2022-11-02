@@ -1,9 +1,19 @@
-# AxumODBC
+<h1 align="center">
+    AxumODBC
+</h1>
+<div align="center">
+    Library to Provide an <a href="https://github.com/pacman82/odbc-api">ODBC-API</a> layer.
+</div>
+<br />
+<div align="center">
+    <a href="https://crates.io/crates/axum_odbc"><img src="https://img.shields.io/crates/v/axum_odbc?style=plastic" alt="crates.io"></a>
+    <a href="https://docs.rs/axum_odbc"><img src="https://docs.rs/axum_odbc/badge.svg" alt="docs.rs"></a>
+    <img src="https://img.shields.io/badge/min%20rust-1.60-green.svg" alt="Minimum Rust Version">
+</div>
 
-Library to Provide an ODBC-Api layer.
+## License
 
-[![https://crates.io/crates/axum_odbc](https://img.shields.io/crates/v/axum_odbc?style=plastic)](https://crates.io/crates/axum_odbc)
-[![Docs](https://docs.rs/axum_odbc/badge.svg)](https://docs.rs/axum_odbc)
+This project is licensed under either [Apache License, Version 2.0](LICENSE-APACHE), [zlib License](LICENSE-ZLIB), or [MIT License](LICENSE-MIT), at your option.
 
 ## Help
 
@@ -27,11 +37,12 @@ axum_odbc = "0.3.1"
 # Example
 
 ```rust no_run
-use axum_odbc::{OdbcManagerLayer, ODBCConnectionManager, blocking};
+use axum_odbc::{ODBCConnectionManager, blocking};
 use axum::{
     Router,
     routing::get,
 };
+use std::time::Duration;
 
 #[tokio::main]
 async fn main() {
@@ -39,9 +50,8 @@ async fn main() {
     let manager = ODBCConnectionManager::new("Driver={ODBC Driver 17 for SQL Server};Server=localhost;UID=SA;PWD=My@Test@Password1;", 5);
 
     // build our application with some routes
-    let app = Router::new()
-        .route("/drop", get(drop_table))
-        .layer(OdbcManagerLayer::new(manager));
+    let app = Router::with_state(manager)
+        .route("/drop", get(drop_table));
 
     // run it
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -54,8 +64,9 @@ async fn main() {
 
 async fn drop_table(manager: ODBCConnectionManager) -> String {
     let mut connection = manager.aquire().await.unwrap();
+    let sleep = || tokio::time::sleep(Duration::from_millis(50));
 
-    let _ = blocking!(connection.execute("DROP TABLE IF EXISTS TEST", ())).unwrap();
+    let _ = connection.execute_polling("DROP TABLE IF EXISTS TEST", (), sleep).await.unwrap();
 
     "compeleted".to_string()
 }
