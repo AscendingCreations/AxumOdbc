@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Unreleased
+## 0.4.0 (26. November, 2022)
 ### Changed
-- Updated ODBC-Api to 0.50.0
+- Updated ODBC-Api to 0.52.2
 - Updated Licenses to add Apache and Zlib.
 - Removed Service
 - Removed Layer

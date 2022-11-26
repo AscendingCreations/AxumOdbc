@@ -28,7 +28,7 @@ Axum ODBC uses [`tokio`] runtime.
 ```toml
 # Cargo.toml
 [dependencies]
-axum_odbc = "0.3.1"
+axum_odbc = "0.4.0"
 ```
 
 #### Cargo Feature Flags
