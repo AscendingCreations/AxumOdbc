@@ -5,8 +5,8 @@ use crate::{
 use async_trait::async_trait;
 use axum_core::extract::{FromRef, FromRequestParts};
 use http::request::Parts;
-use lazy_static::lazy_static;
 use odbc_api::Environment;
+use once_cell::sync::Lazy;
 use std::{convert::Infallible, fmt, sync::Arc};
 
 #[derive(Clone)]
@@ -14,9 +14,7 @@ pub struct ODBCConnectionManager {
     pub(crate) shared: Arc<SharedPool>,
 }
 
-lazy_static! {
-    pub(crate) static ref ENV: Environment = Environment::new().unwrap();
-}
+pub(crate) static ENV: Lazy<Environment> = Lazy::new(|| Environment::new().unwrap());
 
 impl ODBCConnectionManager {
     /// Constructs a ODBCConnectionManager.

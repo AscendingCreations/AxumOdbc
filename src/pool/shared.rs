@@ -38,7 +38,8 @@ impl SharedPool {
                 .map_err(|p| OdbcError::LockError { msg: p.to_string() })?;
 
             let env = &ENV;
-            let conn = env.connect_with_connection_string(conn_str.as_str())?;
+            let conn = env
+                .connect_with_connection_string(conn_str.as_str(), ConnectionOptions::default())?;
             // Promoting a connection to send is unsafe, since not every ODBC driver is thread safe.
             // Actual thread safety for unixODBC may also depend on the threading level defined for the
             // ODBC driver. Here we assume that the user conciously checked the safety of the

@@ -17,7 +17,7 @@ This project is licensed under either [Apache License, Version 2.0](LICENSE-APAC
 
 ## Help
 
-If you need help with this library or have suggestions please go to our [Discord Group](https://discord.gg/xKkm7UhM36)
+If you need help with this library or have suggestions please go to our [Discord Group](https://discord.gg/gVXNDwpS3Z)
 
 ## Install
 
@@ -28,7 +28,7 @@ Axum ODBC uses [`tokio`] runtime.
 ```toml
 # Cargo.toml
 [dependencies]
-axum_odbc = "0.4.0"
+axum_odbc = "0.5.0"
 ```
 
 #### Cargo Feature Flags
