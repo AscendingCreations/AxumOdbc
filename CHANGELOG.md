@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## 0.6.0 (12. july, 2023)
+### Changed
+- Updated ODBC-Api to 0.57.0
+
 ## 0.5.0 (31. March, 2023)
 ### Changed
 - Updated ODBC-Api to 0.55.0
