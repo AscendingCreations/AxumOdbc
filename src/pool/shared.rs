@@ -7,7 +7,7 @@ use std::sync::{Arc, Mutex, RwLock};
 use tokio::task;
 
 pub(crate) struct SharedPool {
-    pub(crate) pool: Mutex<ArrayQueue<odbc_api::force_send_sync::Send<Connection<'static>>>>,
+    pub(crate) pool: Mutex<ArrayQueue<Connection<'static>>>,
     pub(crate) connection_string: RwLock<String>,
 }
 
@@ -40,15 +40,8 @@ impl SharedPool {
             let env = &ENV;
             let conn = env
                 .connect_with_connection_string(conn_str.as_str(), ConnectionOptions::default())?;
-            // Promoting a connection to send is unsafe, since not every ODBC driver is thread safe.
-            // Actual thread safety for unixODBC may also depend on the threading level defined for the
-            // ODBC driver. Here we assume that the user conciously checked the safety of the
-            // application and checked into sending connection then the ODBConnectionManager has been
-            // constructed.
-            // we will attempt to bypass this by handling the pool ourselves.
-            let connection = unsafe { conn.promote_to_send() };
 
-            Ok(ODBCConnection::new(Arc::clone(&self), connection))
+            Ok(ODBCConnection::new(Arc::clone(&self), conn))
         })
         .await?
     }

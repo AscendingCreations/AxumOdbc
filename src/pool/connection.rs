@@ -3,7 +3,7 @@ use crate::SharedPool;
 use std::ops::{Deref, DerefMut};
 use std::sync::Arc;
 
-pub type Connection = odbc_api::force_send_sync::Send<odbc_api::Connection<'static>>;
+pub type Connection = odbc_api::Connection<'static>;
 const DEREF_ERR: &str = "Connection already released to pool";
 
 pub struct ODBCConnection {
