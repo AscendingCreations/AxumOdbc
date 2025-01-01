@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## 0.9.0 (1. Janurary, 2025)
+### Changed
+- Updated ODBC-Api to 10.0.0
+- Updated axum-core to 0.5.0
+
 ## 0.7.0 (9. October, 2023)
 ### Changed
 - Updated ODBC-Api to 2.2.0
