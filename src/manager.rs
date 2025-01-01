@@ -2,7 +2,6 @@ use crate::{
     pool::{ODBCConnection, SharedPool},
     OdbcError,
 };
-use async_trait::async_trait;
 use axum_core::extract::{FromRef, FromRequestParts};
 use http::request::Parts;
 use odbc_api::Environment;
@@ -50,7 +49,6 @@ impl ODBCConnectionManager {
     }
 }
 
-#[async_trait]
 impl<S> FromRequestParts<S> for ODBCConnectionManager
 where
     S: Send + Sync,
