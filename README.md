@@ -21,7 +21,7 @@ If you need help with this library or have suggestions please go to our [Discord
 
 ## Install
 
-Axum ODBC uses [`tokio`] runtime.
+Axum ODBC uses [`tokio`] runtime and uses odbc-api = "12.0.1" internally.
 
 [`tokio`]: https://github.com/tokio-rs/tokio
 
@@ -29,7 +29,6 @@ Axum ODBC uses [`tokio`] runtime.
 # Cargo.toml
 [dependencies]
 axum_odbc = "0.10.0"
-odbc-api = "12.0.1"
 ```
 
 #### Cargo Feature Flags
@@ -38,36 +37,61 @@ odbc-api = "12.0.1"
 # Example
 
 ```rust no_run
-use axum_odbc::{ODBCConnectionManager, blocking};
-use axum::{
-    Router,
-    routing::get,
-};
-use std::time::Duration;
+use axum::extract::State;
+use axum::response::IntoResponse;
+use axum::{routing::get, Router};
+use axum_odbc::{blocking, ODBCConnectionManager};
+use std::net::SocketAddr;
+use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() {
 
     let manager = ODBCConnectionManager::new("Driver={ODBC Driver 17 for SQL Server};Server=localhost;UID=SA;PWD=My@Test@Password1;", 5);
 
+    
     // build our application with some routes
-    let app = Router::with_state(manager)
-        .route("/drop", get(drop_table));
+    let app = Router::new()
+        .route("/drop", get(drop_table))
+        .route("/create", get(create_table))
+        .with_state(manager);
 
     // run it
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     tracing::debug!("listening on {}", addr);
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    let listener = TcpListener::bind(addr).await.unwrap();
+    axum::serve(
+        listener,
+        app.into_make_service_with_connect_info::<SocketAddr>(),
+    )
+    .await
+    .unwrap();
 }
 
-async fn drop_table(manager: ODBCConnectionManager) -> String {
-    let mut connection = manager.aquire().await.unwrap();
-    let sleep = || tokio::time::sleep(Duration::from_millis(50));
+async fn drop_table(State(manager): State<ODBCConnectionManager>) -> impl IntoResponse {
+    let connection = manager.aquire().await.unwrap();
 
-    let _ = connection.execute_polling("DROP TABLE IF EXISTS TEST", (), sleep).await.unwrap();
+    blocking!(
+        let _ = connection.execute("DROP TABLE IF EXISTS testy", (), None).unwrap();
+    );
+
+    "compeleted".to_string()
+}
+
+async fn create_table(State(manager): State<ODBCConnectionManager>) -> impl IntoResponse {
+    let connection = manager.aquire().await.unwrap();
+
+    blocking!(
+            let _ = connection.execute(
+            "IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='testy' AND xtype='U')
+            CREATE TABLE testy (
+            id INT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL
+            );",
+            (),
+            None,
+        ).unwrap();
+    );
 
     "compeleted".to_string()
 }

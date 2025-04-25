@@ -22,7 +22,7 @@ pub use odbc_api as odbc;
 ///
 /// let connection = manager.aquire().await?;
 ///
-/// let _ = blocking!(connection.execute("DROP TABLE IF EXISTS TEST", ()))?;
+/// let _ = blocking!(connection.execute("DROP TABLE IF EXISTS TEST", (), None))?;
 /// ```
 ///
 #[macro_export]
