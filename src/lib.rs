@@ -26,7 +26,6 @@ pub use odbc_api as odbc;
 /// ```
 ///
 #[macro_export]
-
 macro_rules! blocking {
     ($($expr:tt)*) => {
         $crate::tokio::task::spawn_blocking(move || { $($expr)* })

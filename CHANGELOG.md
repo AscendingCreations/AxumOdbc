@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## 0.10.0 (1. Janurary, 2025)
+### Changed
+- Updated ODBC-Api to 12.0.1
+
 ## 0.9.0 (1. Janurary, 2025)
 ### Changed
 - Updated ODBC-Api to 10.0.0
