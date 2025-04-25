@@ -37,7 +37,6 @@ axum_odbc = "0.10.0"
 # Example
 
 ```rust no_run
-use axum::extract::State;
 use axum::response::IntoResponse;
 use axum::{routing::get, Router};
 use axum_odbc::{blocking, ODBCConnectionManager};
@@ -68,7 +67,7 @@ async fn main() {
     .unwrap();
 }
 
-async fn drop_table(State(manager): State<ODBCConnectionManager>) -> impl IntoResponse {
+async fn drop_table(manager: ODBCConnectionManager) -> impl IntoResponse {
     let connection = manager.aquire().await.unwrap();
 
     blocking!(
@@ -78,7 +77,7 @@ async fn drop_table(State(manager): State<ODBCConnectionManager>) -> impl IntoRe
     "compeleted".to_string()
 }
 
-async fn create_table(State(manager): State<ODBCConnectionManager>) -> impl IntoResponse {
+async fn create_table(manager: ODBCConnectionManager) -> impl IntoResponse {
     let connection = manager.aquire().await.unwrap();
 
     blocking!(
