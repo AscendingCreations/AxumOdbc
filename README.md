@@ -46,7 +46,7 @@ use tokio::net::TcpListener;
 #[tokio::main]
 async fn main() {
 
-    let manager = ODBCConnectionManager::new("Driver={ODBC Driver 17 for SQL Server};Server=localhost;UID=SA;PWD=My@Test@Password1;", 5);
+    let manager = ODBCConnectionManager::new("Driver={ODBC Driver 17 for SQL Server};Server=localhost;UID=SomeUserName;PWD=My@Test@Password1;Database=Test;", 5);
 
     
     // build our application with some routes
